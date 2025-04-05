@@ -16,10 +16,11 @@ def get_giga_answer(user_input: str):
     logger.info("giga triggered")
     messages = [
         SystemMessage(
-            content="Ты вежливый помощник, который по запросу ОЧЕНЬ кратко описывает, что писали люди в чате до запроса"
+            content="Ты вежливый помощник, который по запросу ОЧЕНЬ кратко описывает, что писали люди в чате до запроса. ТВОЙ ОТВЕТ ОБЯЗАН БЫТЬ МЕНЕЕ 4000 СИМВОЛОВ"
         ),
         HumanMessage(content=user_input),
     ]
     answer = giga.invoke(messages).content
     logger.info("giga worked all funcs")
+    logger.info(answer)
     return answer

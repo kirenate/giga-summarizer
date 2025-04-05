@@ -1,11 +1,11 @@
-from summary_bot.data import get_from_db, get_slice_from_db, msg_list_to_string
+from data import get_from_db, get_slice_from_db, msg_list_to_string, get_slice_from_db_amount, msg_list_to_string_amount
 import pytest
 from gigachat import GigaChat
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from typing import Annotated
 from typing_extensions import Annotated, TypedDict
-from summary_bot.gch import giga
+from gch import giga
 
 
 @pytest.mark.data
@@ -19,9 +19,19 @@ def test_get_slice_from_db_ok() -> None:
 
 
 @pytest.mark.data
-def test_msg_list_to_sting_ok() -> None:
+def test_msg_list_to_string_ok() -> None:
     test_message = msg_list_to_string()
     # assert test_message is str      на подумоть
+
+
+@pytest.mark.dataAmount
+def test_get_slice_from_db_amount_ok() -> None:
+    get_slice_from_db_amount("100")
+
+
+@pytest.mark.dataAmount
+def test_msg_list_to_string_amount_ok() -> None:
+    msg_list_to_string_amount("100")
 
 
 @pytest.mark.langgraph

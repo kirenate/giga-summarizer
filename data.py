@@ -45,11 +45,38 @@ def msg_list_to_string() -> str:
     return msg_string
 
 
+def msg_list_to_string_amount(amount: str):
+    logger.info("Func msg_list_to_strin_amount")
+    logger.info(amount)
+    logger.info(type(amount))
+    msg_list_fetched = get_slice_from_db_amount(amount)
+    msg_string = "История чата:\n\n"
+    for msgs in msg_list_fetched:
+        msg_string += msgs[2] + " пишет:\n" + msgs[3] + "\n\n\n"
+    logger.info(print(msg_string))
+    return msg_string
+
+
+def get_slice_from_db_amount(amount: str) -> list:
+    """Gets a few of latest messages from messages2.db"""
+    logger.info("Func get_slice_from_db_amount")
+    logger.info(amount)
+    logger.info(type(amount))
+    connection2 = sqlite3.connect("messages2.db")
+    cur2 = connection2.cursor()
+    cur2.execute("SELECT chatid, date, user, text FROM messages2 ORDER BY id DESC LIMIT (?)", (amount,))
+    msg_list_fetched = cur2.fetchall()
+    logger.info(print(msg_list_fetched))
+    connection2.close()
+    logger.info("messages2 fetched from db")
+    return msg_list_fetched
+
+
 def get_slice_from_db() -> list:  # for multiple msgs
     """Gets a few of latest messages from messages2.db"""
     connection2 = sqlite3.connect("messages2.db")
     cur2 = connection2.cursor()
-    cur2.execute("SELECT chatid, date, user, text FROM messages2 ORDER BY id DESC LIMIT 10")
+    cur2.execute("SELECT chatid, date, user, text FROM messages2 ORDER BY id DESC LIMIT 50")
     msg_list_fetched = cur2.fetchall()
     logger.info(print(msg_list_fetched))
     connection2.close()

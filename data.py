@@ -6,11 +6,11 @@ import json
 
 
 ''' async def insert_into_db(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Inserts all messages to messages2.db"""
+    """Inserts all messages to ./data/messages2.db"""
     assert update.effective_message is not None
 
     jmessage = json.dumps(update.effective_message, ensure_ascii=False)
-    connection1 = sqlite3.connect("messages2.db")
+    connection1 = sqlite3.connect("./data/messages2.db")
     cur1 = connection1.cursor()
     cur1.execute("INSERT INTO messages2 (json_message) VALUES (?)", (jmessage,))
     connection1.commit()
@@ -20,14 +20,14 @@ import json
 
 
 async def insert_into_db(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Inserts all messages to messages2.db"""
+    """Inserts all messages to ./data/messages2.db"""
     assert update.effective_message and update.effective_chat and update.effective_sender is not None
 
     text = update.effective_message.text
     chatid = update.effective_chat.id
     date = update.effective_message.date
     user = update.effective_sender.username
-    connection1 = sqlite3.connect("messages2.db")
+    connection1 = sqlite3.connect("./data/messages2.db")
     cur1 = connection1.cursor()
     cur1.execute("INSERT INTO messages2 (chatid, date, user, text) VALUES (?, ?, ?, ?)", (chatid, date, user, text))
     connection1.commit()
@@ -58,11 +58,11 @@ def msg_list_to_string_amount(amount: str):
 
 
 def get_slice_from_db_amount(amount: str) -> list:
-    """Gets a few of latest messages from messages2.db"""
+    """Gets a few of latest messages from ./data/messages2.db"""
     logger.info("Func get_slice_from_db_amount")
     logger.info(amount)
     logger.info(type(amount))
-    connection2 = sqlite3.connect("messages2.db")
+    connection2 = sqlite3.connect("./data/messages2.db")
     cur2 = connection2.cursor()
     cur2.execute("SELECT chatid, date, user, text FROM messages2 ORDER BY id DESC LIMIT (?)", (amount,))
     msg_list_fetched = cur2.fetchall()
@@ -73,8 +73,8 @@ def get_slice_from_db_amount(amount: str) -> list:
 
 
 def get_slice_from_db() -> list:  # for multiple msgs
-    """Gets a few of latest messages from messages2.db"""
-    connection2 = sqlite3.connect("messages2.db")
+    """Gets a few of latest messages from ./data/messages2.db"""
+    connection2 = sqlite3.connect("./data/messages2.db")
     cur2 = connection2.cursor()
     cur2.execute("SELECT chatid, date, user, text FROM messages2 ORDER BY id DESC LIMIT 50")
     msg_list_fetched = cur2.fetchall()
@@ -85,7 +85,7 @@ def get_slice_from_db() -> list:  # for multiple msgs
 
 
 def get_from_db() -> dict:  # for one msg only
-    connection2 = sqlite3.connect("messages2.db")
+    connection2 = sqlite3.connect("./data/messages2.db")
     cur2 = connection2.cursor()
     cur2.execute("SELECT chatid, date, user, text FROM messages2 ORDER BY id DESC LIMIT 1")
     msg_fetched = cur2.fetchone()
@@ -104,7 +104,7 @@ def get_from_db() -> dict:  # for one msg only
 # ........................................................................................................
 
 def create_table_if_not_exists():
-    connection_check = sqlite3.connect("messages2.db")
+    connection_check = sqlite3.connect("./data/./data/messages2.db")
     cur = connection_check.cursor()
 
     messages2 = cur.execute(

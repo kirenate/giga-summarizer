@@ -1,7 +1,7 @@
 pytest.ini
 gch_langgraph.py
 messages.db
-messages2.db
+./data/messages2.db
 requirements.txt
 settings.py
 __pycache__

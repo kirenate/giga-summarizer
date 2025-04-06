@@ -103,7 +103,13 @@ def get_from_db() -> dict:  # for one msg only
 
 # ........................................................................................................
 
+from pathlib import Path
+
 def create_table_if_not_exists():
+    try:
+        Path("./data/messages2.db").touch()
+    except:
+        ...
     connection_check = sqlite3.connect("./data/messages2.db")
     cur = connection_check.cursor()
 

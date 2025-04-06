@@ -104,7 +104,7 @@ def get_from_db() -> dict:  # for one msg only
 # ........................................................................................................
 
 def create_table_if_not_exists():
-    connection_check = sqlite3.connect("./data/./data/messages2.db")
+    connection_check = sqlite3.connect("./data/messages2.db")
     cur = connection_check.cursor()
 
     messages2 = cur.execute(
